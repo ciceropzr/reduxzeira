@@ -18,7 +18,7 @@ function App() {
         <Route exact path="/home">
           <AlunosLista />
         </Route>
-        <Route exact path="/">
+        <Route path="/">
           <Redirect to="/home" />
         </Route>
       </Switch>

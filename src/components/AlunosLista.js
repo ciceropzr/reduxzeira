@@ -2,8 +2,16 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../style.css'
+import { connect } from 'react-redux';
 
-function AlunosLista() {
+function selectAluno(aluno) {
+  return {
+    type: 'SELECT_ALUNO',
+    aluno,
+  }
+}
+
+const AlunosLista = ({teste, dispatch}) => {
   const [alunos, setAlunos] = useState([])
 
   useEffect(() => {
@@ -13,10 +21,10 @@ function AlunosLista() {
   return (
     <div className="container">
       <div className='content'>
-        <h1 className='title'>Alunos</h1>
+        <h1 className='title'>Alunos - {teste}</h1>
         <section className='alunos'>
           {alunos.map((aluno, index) => (
-            <Link to={`aluno/${aluno.name.replaceAll(' ', '').toLowerCase()}`} key={index}>
+            <Link to={`/aluno/${aluno.name.replaceAll(' ', '').toLowerCase()}`} key={index} onClick={() => dispatch(selectAluno(aluno))}>
               <div className='alunoCard'>
                 <figure>
                   <img src={aluno.image} />
@@ -25,10 +33,15 @@ function AlunosLista() {
               </div>
             </Link>
           ))}
+         
         </section>
       </div>
     </div>
   );
 }
 
-export default AlunosLista;
+const mapStateToProps = state => ({
+  teste: state.teste
+})
+
+export default connect(mapStateToProps)(AlunosLista);
