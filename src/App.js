@@ -1,8 +1,7 @@
 import {
-  BrowserRouter as Router,
-  Switch,
   Route,
-  Redirect
+  Routes,
+  BrowserRouter,
 } from "react-router-dom";
 
 import AlunosLista from './components/AlunosLista';
@@ -10,19 +9,12 @@ import AlunoInfo from './components/AlunoInfo.js'
 
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/aluno/:alunoNome">
-          <AlunoInfo />
-        </Route>
-        <Route exact path="/home">
-          <AlunosLista />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-      </Switch>
-    </Router>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<AlunosLista />} />
+        <Route path="/aluno/:alunoNome" element={<AlunoInfo />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
