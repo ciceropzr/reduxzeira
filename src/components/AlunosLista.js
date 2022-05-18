@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import '../style.css'
 import { connect } from 'react-redux';
 
-function selectAluno(aluno) {
+const setAluno = (aluno) => {
   return {
-    type: 'SELECT_ALUNO',
+    type: 'SET_ALUNO',
     aluno,
   }
 }
 
-const AlunosLista = ({teste, dispatch}) => {
+function AlunosLista({stateAluno, dispatch}) {
   const [alunos, setAlunos] = useState([])
 
   useEffect(() => {
@@ -21,10 +21,14 @@ const AlunosLista = ({teste, dispatch}) => {
   return (
     <div className="container">
       <div className='content'>
-        <h1 className='title'>Alunos - {teste}</h1>
+        <h1 className='title'>Alunos</h1>
         <section className='alunos'>
           {alunos.map((aluno, index) => (
-            <Link to={`/aluno/${aluno.name.replaceAll(' ', '').toLowerCase()}`} key={index} onClick={() => dispatch(selectAluno(aluno))}>
+            <Link
+              to={`aluno/${aluno.name.replaceAll(' ', '').toLowerCase()}`}
+              key={index}
+              onClick={() => dispatch(setAluno(aluno))}
+            >
               <div className='alunoCard'>
                 <figure>
                   <img src={aluno.image} />
@@ -40,8 +44,8 @@ const AlunosLista = ({teste, dispatch}) => {
   );
 }
 
-const mapStateToProps = state => ({
-  teste: state.teste
+const mapStateToProps = (state) => ({
+  stateAluno: state.aluno,
 })
 
 export default connect(mapStateToProps)(AlunosLista);
